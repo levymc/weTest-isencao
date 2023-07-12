@@ -11,18 +11,24 @@ async function main() {
 
   
 
-  try {
-    await driver.get(process.env.URL);
+    try {
+        await driver.get(process.env.URL);
 
-    await doLogin(driver)
+        await doLogin(driver)
 
-    await driver.sleep(4000)
+        await driver.sleep(4000)
 
-    await encontraServico(driver);
 
-  } finally {
-    await driver.quit();
-  }
+        await encontraServico(driver);
+
+    }catch(err){
+        console.error(err)
+    }
+    
+    finally {
+        
+        await driver.quit();
+    }
 }
 
 main();

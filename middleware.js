@@ -11,14 +11,8 @@ export async function encontraServico() {
 
     
     await driver.switchTo().window(abas[1]);// vai p nova aba 
-    // await driver.sleep(5000);
 
-//     encontraFunc(driver)
-// }
-
-// async function encontraFunc(){
-
-    console.log('chega aqui')
+    // console.log('chega aqui')
 
     await driver.findElement(By.xpath('//*[@id="grid-subtela"]/div/div[3]/div[2]/h3[1]')).click()
 
@@ -26,33 +20,73 @@ export async function encontraServico() {
 
     abas = await driver.getAllWindowHandles();
 
-    console.log(abas)
-
     await driver.switchTo().window(abas[2])
+
+    // comeca o modalIsencao
 
     await waitUntilShow(driver, By.xpath('//*[@id="btnIsencao-10"]'));
 
-    console.log(2)
-
     await driver.findElement(By.xpath('//*[@id="btnIsencao-10"]')).click();
-
-    console.log(3)
 
     await waitUntilShow(driver, By.xpath('//*[@id="data-final"]'))
 
-    await driver.findElement(By.xpath('//*[@id="data-final"]')).sendKeys('05/01/2023')
+    await driver.findElement(By.xpath('//*[@id="data-final"]')).sendKeys('05012023')
+
+    await driver.findElement(By.xpath('//*[@id="swal2-title"]')).click()
 
     await driver.findElement(By.xpath('//*[@id="swal2-content"]/div[4]/div/button')).click()
 
+    console.log(1)
+    await driver.sleep(1000)
+
     await driver.findElement(By.xpath('//*[@id="swal2-content"]/div[4]/div/div/div[2]/ul/li[1]')).click()
+    console.log(2)
+
+    await driver.sleep(1000)
 
     await driver.findElement(By.className('swal2-confirm btn btn-success')).click()
 
-    await driver.sleep(10000);
+    await driver.sleep(3000)
+
+    await waitUntilShow(driver, By.className('swal2-confirm btn btn-success'))
+
+    await driver.findElement(By.className('swal2-confirm btn btn-success')).click()
+
+    // Ate aqui realizou a isencao, agora vai comecar a remover ela
+
+    await waitUntilShow(driver, By.xpath('//*[@id="datatables-servicos-pendencias_filter"]'))
+
+    await removeIsencao(driver)
 
     
 }
   
+async function removeIsencao(driver){
+    let abas = await driver.getAllWindowHandles();
+    console.log(abas)
+    await driver.switchTo().window(abas[2])
+    
+    await driver.sleep(3000)
+
+    await driver.findElement(By.xpath('//*[@id="btnIsencao-10"]')).click()
+
+    await driver.sleep(3000)
+    console.log(1)
+
+    await driver.findElement(By.className('action-footer-swal')).click()
+    console.log(2)
+
+    await waitUntilShow(driver, By.className('swal2-confirm btn btn-success'))
+    console.log(3)
+
+    await driver.findElement(By.className('swal2-confirm btn btn-success')).click()
+    console.log(4)
+
+
+    await driver.sleep(3000)
+
+}
+
 
 async function waitUntilShow(driver, locator) {
     await driver.wait(until.elementLocated(locator));
