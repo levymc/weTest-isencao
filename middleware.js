@@ -18,7 +18,17 @@ export async function encontraServico() {
 
     await driver.sleep(1000);
 
-    abas = await driver.getAllWindowHandles();
+    
+
+    for (let i = 1; i <= 5; i++){
+        await modalIsencao(i)
+    }
+    
+}
+
+async function modalIsencao(i){
+
+    const abas = await driver.getAllWindowHandles();
 
     await driver.switchTo().window(abas[2])
 
@@ -39,7 +49,7 @@ export async function encontraServico() {
     console.log(1)
     await driver.sleep(1000)
 
-    await driver.findElement(By.xpath('//*[@id="swal2-content"]/div[4]/div/div/div[2]/ul/li[1]')).click()
+    await driver.findElement(By.xpath(`//*[@id="swal2-content"]/div[4]/div/div/div[2]/ul/li[${i}]`)).click()
     console.log(2)
 
     await driver.sleep(1000)
@@ -51,6 +61,8 @@ export async function encontraServico() {
     await waitUntilShow(driver, By.className('swal2-confirm btn btn-success'))
 
     await driver.findElement(By.className('swal2-confirm btn btn-success')).click()
+
+    console.log("Realizou a isenção com sucesso!")
 
     // Ate aqui realizou a isencao, agora vai comecar a remover ela
 
@@ -81,6 +93,12 @@ async function removeIsencao(driver){
 
     await driver.findElement(By.className('swal2-confirm btn btn-success')).click()
     console.log(4)
+
+    await waitUntilShow(driver, By.className('swal2-confirm btn btn-success'))
+    console.log(5)
+
+    await driver.findElement(By.className('swal2-confirm btn btn-success')).click()
+    console.log(6)
 
 
     await driver.sleep(3000)

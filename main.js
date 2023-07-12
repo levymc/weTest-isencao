@@ -18,8 +18,7 @@ async function main() {
 
         await driver.sleep(4000)
 
-
-        await encontraServico(driver);
+        await encontraServico()
 
     }catch(err){
         console.error(err)
