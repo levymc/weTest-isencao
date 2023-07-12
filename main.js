@@ -5,9 +5,11 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+export const driver = await new Builder().forBrowser('chrome').build();
+
 async function main() {
 
-  const driver = await new Builder().forBrowser('chrome').build();
+  
 
   try {
     await driver.get(process.env.URL);
